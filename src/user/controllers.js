@@ -27,7 +27,7 @@ exports.login = async (req, res) => {
     }
   };
 
-  exports.getEmail = async (req,res) => {
+  exports.findEmail = async (req,res) => {
     try{
         const user = await User.findOne({
             username:req.params.username
@@ -39,7 +39,7 @@ exports.login = async (req, res) => {
     }
 };
 
-exports.deleteUser = async (req,res) => {
+exports.delUser = async (req,res) => {
     try{
         await User.findOneAndDelete({ 
             username:req.params.username, 
@@ -51,7 +51,7 @@ exports.deleteUser = async (req,res) => {
     }
 };
 
-exports.changePass = async (req,res) => {
+exports.updatePass = async (req,res) => {
     try{const user = await User.findOne({username:req.body.username});
         if(user.signedIn){
         await User.findOneAndUpdate({
@@ -61,14 +61,14 @@ exports.changePass = async (req,res) => {
             password:req.body.password,
         }});
         res.end();
-    }else{throw new Error("not signed in");res.end();}}
+    }else{throw new Error("Unable to Sign");res.end();}}
     catch(error){
         console.log(error);
         res.send({error});
     }
 };
 
-exports.displayUsers = async (req,res) => {
+exports.dispUsers = async (req,res) => {
     try{
         res.send(await User.find());
         
